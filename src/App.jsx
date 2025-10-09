@@ -1,28 +1,37 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-
+import { questions } from "../src/data/questions";
+import { useState } from "react";
 function App() {
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+
+  const nextQuestion = () => {
+    setCurrentQuestion(currentQuestion + 1);
+  };
   return (
-    <div
-      className="d-flex justify-content-center align-items-center"
-      style={{ minHeight: "100vh" }}
-    >
-      <div className="container text-center border rounded-3 shadow-lg p-5">
-        <div>
-          <div className="text-danger m-4 p-2 display-6 border rounded shadow-lg">
-            Quiz App
-          </div>
-
-          <div>
-            <div className="mb-3"></div>
-
-            <button></button>
-
-            <button className="btn btn-success mt-1 w-50">Next Question</button>
-            <p className="fs-6 text-muted mt-1"></p>
-          </div>
-        </div>
+    <div className="container text-center mt-4 border p-3 d-flex flex-column align-items-center">
+      <div className="display-6 text-danger m-3"> Quiz App</div>
+      <div className="d-flex flex-column align-items-center w-100 m-5">
+        {questions[currentQuestion].questionText}
       </div>
+      {questions[currentQuestion].answerOptions.map((option, index) => (
+        <button
+          key={index}
+          className="w-50 text-center p-4 border text-center w-75"
+        >
+          {option.answerText}
+        </button>
+      ))}
+
+      <button
+        className="btn btn-success border p-4 w-75"
+        onClick={nextQuestion}
+      >
+        NEXT QUESTION
+      </button>
+      <p className="mt-2">
+        Question {currentQuestion + 1} out of {questions.length}
+      </p>
     </div>
   );
 }
